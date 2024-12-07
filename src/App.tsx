@@ -4,7 +4,10 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
+import ProfilePage from './pages/ProfilePage';
+import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
+import { SidebarProvider } from './components/Layout/Sidebar/SidebarContext';
 
 const AUTH0_DOMAIN = 'dev-q2n8zijxljidyp8c.us.auth0.com';
 const AUTH0_CLIENT_ID = 'wpiDDKPQctDk2c6Tcl63NQTvu1VdvNhf';
@@ -20,18 +23,36 @@ function App() {
       }}
     >
       <Router>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <MainPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <SidebarProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <MainPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <ProfilePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <SettingsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </SidebarProvider>
       </Router>
     </Auth0Provider>
   );
