@@ -1,9 +1,18 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { LogIn } from 'lucide-react';
+import { loginWithGoogle, loginWithMicrosoft } from '../utils/auth';
 
 const LoginPage = () => {
-  const { loginWithRedirect } = useAuth0();
+  const auth0Context = useAuth0();
+
+  const handleGoogleLogin = async () => {
+    await loginWithGoogle(auth0Context);
+  };
+
+  const handleMicrosoftLogin = async () => {
+    await loginWithMicrosoft(auth0Context);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -16,7 +25,7 @@ const LoginPage = () => {
 
         <div className="space-y-4">
           <button
-            onClick={() => loginWithRedirect({ connection: 'google-oauth2' })}
+            onClick={handleGoogleLogin}
             className="w-full flex items-center justify-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
           >
             <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
@@ -24,7 +33,7 @@ const LoginPage = () => {
           </button>
 
           <button
-            onClick={() => loginWithRedirect({ connection: 'windowslive' })}
+            onClick={handleMicrosoftLogin}
             className="w-full flex items-center justify-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
           >
             <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft" className="w-5 h-5" />
