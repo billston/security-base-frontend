@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { SidebarProvider } from './components/Layout/Sidebar/SidebarContext';
+import AuthCallback from './features/auth0/components/AuthCallback';
 
 const AUTH0_DOMAIN = 'dev-q2n8zijxljidyp8c.us.auth0.com';
 const AUTH0_CLIENT_ID = 'wpiDDKPQctDk2c6Tcl63NQTvu1VdvNhf';
@@ -18,7 +19,8 @@ function App() {
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/auth/callback`,
+        response_type: 'code',
         prompt: 'login',
       }}
     >
@@ -26,6 +28,7 @@ function App() {
         <SidebarProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route
               path="/"
               element={
